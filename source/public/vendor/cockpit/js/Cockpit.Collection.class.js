@@ -1,35 +1,40 @@
 class CockpitCollection {
   constructor(data) {
-    this.host = data.host;
+    this.endpoint = data.endpoint;
     this.accessToken = data.accessToken;
     this.collection = data.collection;
 
-    this.url = `${this.host}/api/collections/get/${this.collection}?token=${this.accessToken}`;
+    this.url = `${this.endpoint}/api/collections/get/${this.collection}?token=${this.accessToken}`;
   }
 
   listCollections() {
-    var url = `${this.host}/api/collections/listCollections?token=${this.accessToken}`;
+    var url = `${this.endpoint}/api/collections/listCollections?token=${this.accessToken}`;
     fetch(url)
       .then(collections => collections.json())
       .then(collections => console.log(collections));
   }
 
   getSchema() {
-    var url = `${this.host}/api/collections/collection/${this.collection}?token=${this.accessToken}`;
+    var url = `${this.endpoint}/api/collections/collection/${this.collection}?token=${this.accessToken}`;
     fetch(url)
       .then(collection => collection.json())
       .then(collection => console.log(collection));
   }
 
+  get CollectionUrl() {
+    var url = `${this.endpoint}/api/collections/get/${this.collection}?token=${this.accessToken}`;
+    return url;
+  }
+
   getCollection() {
-    var url = `${this.host}/api/collections/get/${this.collection}?token=${this.accessToken}`;
+    var url = `${this.endpoint}/api/collections/get/${this.collection}?token=${this.accessToken}`;
     fetch(url)
       .then(collections => collections.json())
       .then(collections => console.log(collections));
   }
 
   filterCollection() {
-    var url = `${this.host}/api/collections/get/${this.collection}?token=${this.accessToken}`;
+    var url = `${this.endpoint}/api/collections/get/${this.collection}?token=${this.accessToken}`;
     fetch(url, {
         method: 'post',
         headers: {
@@ -51,17 +56,22 @@ class CockpitCollection {
       .then(collections => console.log(collections));
   }
 
-  updateCollection() {
-    var url = `${this.host}/api/collections/save/${this.collection}?token=${this.accessToken}`;
+  updateCollection(data) {
+    var url = `${this.endpoint}/api/collections/save/${this.collection}?token=${this.accessToken}`;
+    var body = {
+      data
+    };
+
     fetch(url, {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        data: JSON.stringify(payload)
+        body: JSON.stringify(body)
       })
-      .then(collections => collections.json())
-      .then(collections => console.log(collections));
+      .then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
   }
 
 }

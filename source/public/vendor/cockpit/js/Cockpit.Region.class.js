@@ -1,33 +1,38 @@
-class Cockpitregion {
+class CockpitRegion {
   constructor(data) {
-    this.host = data.host;
+    this.endpoint = data.endpoint;
     this.accessToken = data.accessToken;
     this.region = data.region;
   }
 
   listRegions() {
-    var url = `${this.host}/api/regions/listRegions?token=${this.accessToken}`;
+    var url = `${this.endpoint}/api/regions/listRegions?token=${this.accessToken}`;
     fetch(url)
       .then(regions => regions.json())
       .then(regions => console.log(regions));
   }
 
   getSchema() {
-    var url = `${this.host}/api/regions/region/${this.region}?token=${this.accessToken}`;
+    var url = `${this.endpoint}/api/regions/region/${this.region}?token=${this.accessToken}`;
     fetch(url)
       .then(region => region.json())
       .then(region => console.log(region));
   }
 
-  getregion() {
-    var url = `${this.host}/api/regions/get/${this.region}?token=${this.accessToken}`;
+  get RegionUrl() {
+    var url = `${this.endpoint}/api/regions/get/${this.region}?token=${this.accessToken}`;
+    return url;
+  }
+
+  getRegion() {
+    var url = `${this.endpoint}/api/regions/get/${this.region}?token=${this.accessToken}`;
     fetch(url)
       .then(regions => regions.json())
       .then(regions => console.log(regions));
   }
 
-  filterregion() {
-    var url = `${this.host}/api/regions/get/${this.region}?token=${this.accessToken}`;
+  filterRegion() {
+    var url = `${this.endpoint}/api/regions/get/${this.region}?token=${this.accessToken}`;
     fetch(url, {
         method: 'post',
         headers: {
@@ -49,17 +54,20 @@ class Cockpitregion {
       .then(regions => console.log(regions));
   }
 
-  updateregion() {
-    var url = `${this.host}/api/regions/save/${this.region}?token=${this.accessToken}`;
+  updateRegion(data) {
+    var url = `${this.endpoint}/api/regions/save/${this.region}?token=${this.accessToken}`;
+    var body = { data };
+
     fetch(url, {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        data: JSON.stringify(payload)
+        body: JSON.stringify( body )
       })
-      .then(regions => regions.json())
-      .then(regions => console.log(regions));
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
   }
 
 }
