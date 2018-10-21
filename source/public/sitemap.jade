@@ -3,7 +3,7 @@
 
 mixin tree(head, tail)
   for val, key in head
-    if key !== '.git' && key !== '_data'
+    if key !== '.git' && key !== '_data' && key !== 'vendor' 
       if key == '_contents'
         each file in val
           if filter.test(file) && !/^404\.html/.test(file)
